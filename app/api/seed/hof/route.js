@@ -6,7 +6,7 @@ export async function POST() {
   const pool = getPool();
 
   const getId = async (name) => {
-    const r = await pool.query('SELECT id FROM players WHERE name = $1', [name]);
+    const r = await pool.query('SELECT id FROM players WHERE name ILIKE $1', [name]);
     return r.rows.length ? r.rows[0].id : null;
   };
 

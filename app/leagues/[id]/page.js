@@ -78,21 +78,17 @@ export default function LeaguePage() {
     const idNum = ++loadRef.current;
     if (!loadedOnce.current) setLoading(true);
 
-    const [l, p, m] = await Promise.all([
-      fetch('/api/leagues/' + id).then(r => r.json()),
-      fetch('/api/leagues/' + id + '/participants').then(r => r.json()),
-      fetch('/api/leagues/' + id + '/matches').then(r => r.json()),
-    ]);
+    const data = await fetch('/api/leagues/' + id + '/page-data').then(r => r.json());
     if (loadRef.current !== idNum) return;
-    setLeague(l); setParticipants(p);
-    let matchesData = m;
+    setLeague(data.league); setParticipants(data.participants); setStandings(data.standings);
+    let matchesData = data.matches;
 
-    if (l?.type === 'league' && needsAutoFill.current) {
+    if (data.league?.type === 'league' && needsAutoFill.current) {
       needsAutoFill.current = false;
       const result = await autoFillPlayoffs();
       if (loadRef.current !== idNum) return;
       if (result.changes?.length) {
-        matchesData = await fetch('/api/leagues/' + id + '/matches').then(r => r.json());
+        matchesData = await fetch('/api/leagues/' + id + '/page-data').then(r => r.json()).then(d => d.matches);
         if (loadRef.current !== idNum) return;
       }
     }
@@ -106,7 +102,7 @@ export default function LeaguePage() {
     const champ = detectChampion(matchesData, rr);
     if (champ && champ !== prevChampionRef.current) {
       prevChampionRef.current = champ;
-      const cp = p.find(p => p.id === champ);
+      const cp = data.participants.find(p => p.id === champ);
       if (cp) setChampionTeam(cp);
     }
     if (!champ) prevChampionRef.current = null;
