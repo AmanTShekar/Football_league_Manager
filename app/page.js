@@ -56,10 +56,10 @@ export default function HomePage() {
         <div className="hero-area animate-in delay-1">
           <div className="hero-glow" />
           <div className="hero-img-frame">
-            <img src="/hero.jpg" alt="PPL" className="hero-img" loading="lazy" onError={e => { e.target.style.display='none' }} />
+            <img src="/hero.jpg" alt="FLM" className="hero-img" loading="lazy" onError={e => { e.target.style.display='none' }} />
           </div>
-          <h1 className="hero-title">Perumbavoor Premier League</h1>
-          <p className="hero-sub">Football management, reimagined.</p>
+          <h1 className="hero-title">Football League Manager</h1>
+          <p className="hero-sub">Open-source football management, reimagined.</p>
           <div className="hero-divider" />
         </div>
 

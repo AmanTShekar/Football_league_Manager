@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Perumbavoor Premier League',
-  description: 'Football league management, reimagined.',
+  title: 'Football League Manager',
+  description: 'Open-source football league management, reimagined.',
 };
 
 export const viewport = {
@@ -19,9 +19,9 @@ function Footer() {
           <a href="/" className="footer-link">Leagues</a>
           <a href="/players" className="footer-link">Players</a>
           <a href="/hall-of-fame" className="footer-link">Hall of Fame</a>
-          <a href="https://github.com/AmanTShekar/Permbavoor_premier_league" className="footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://github.com" className="footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
-        <div className="footer-copy">&copy; {new Date().getFullYear()} Perumbavoor Premier League</div>
+        <div className="footer-copy">&copy; {new Date().getFullYear()} Football League Manager</div>
       </div>
     </footer>
   );
