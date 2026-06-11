@@ -417,15 +417,9 @@ export default function LeaguePage() {
         <div className="modal-title">Add Match</div>
         <div className="modal-teams">Select players for the match</div>
         <div className="modal-inputs">
-          <select className="create-select flex-1" value={addMatchSel.home} onChange={e => setAddMatchSel(s => ({...s,home:e.target.value}))}>
-            <option value="">Home player</option>
-            {participants.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
-          </select>
+          <Select value={addMatchSel.home} onChange={v => setAddMatchSel(s => ({...s,home:v}))} options={[{value:'',label:'Home player'}, ...participants.map(p => ({value:''+p.id,label:p.name}))]} placeholder="Home player" className="flex-1" />
           <span className="vs-dash">—</span>
-          <select className="create-select flex-1" value={addMatchSel.away} onChange={e => setAddMatchSel(s => ({...s,away:e.target.value}))}>
-            <option value="">Away player</option>
-            {participants.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
-          </select>
+          <Select value={addMatchSel.away} onChange={v => setAddMatchSel(s => ({...s,away:v}))} options={[{value:'',label:'Away player'}, ...participants.map(p => ({value:''+p.id,label:p.name}))]} placeholder="Away player" className="flex-1" />
         </div>
         <div className="modal-actions">
           <button className="btn-ghost btn-sm" onClick={() => setShowAddMatch(false)}>Cancel</button>
