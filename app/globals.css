@@ -1138,3 +1138,162 @@ main { content-visibility: auto; contain-intrinsic-size: 600px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+
+/* ===================== */
+/* 🎬 ENTRANCE ANIMATIONS */
+/* ===================== */
+.animate-in {
+  animation: fadeSlideUp 0.5s var(--ease-out) both;
+}
+.animate-fade-in {
+  animation: fadeIn 0.4s var(--ease-out) both;
+}
+.animate-scale-in {
+  animation: scaleIn 0.4s var(--ease-spring) both;
+}
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Staggered children – each child animates with progressive delay */
+.stagger-children > * {
+  animation: fadeSlideUp 0.5s var(--ease-out) both;
+}
+.stagger-children > *:nth-child(1)  { animation-delay: 0.02s; }
+.stagger-children > *:nth-child(2)  { animation-delay: 0.04s; }
+.stagger-children > *:nth-child(3)  { animation-delay: 0.06s; }
+.stagger-children > *:nth-child(4)  { animation-delay: 0.08s; }
+.stagger-children > *:nth-child(5)  { animation-delay: 0.10s; }
+.stagger-children > *:nth-child(6)  { animation-delay: 0.12s; }
+.stagger-children > *:nth-child(7)  { animation-delay: 0.14s; }
+.stagger-children > *:nth-child(8)  { animation-delay: 0.16s; }
+.stagger-children > *:nth-child(9)  { animation-delay: 0.18s; }
+.stagger-children > *:nth-child(10) { animation-delay: 0.20s; }
+.stagger-children > *:nth-child(11) { animation-delay: 0.22s; }
+.stagger-children > *:nth-child(12) { animation-delay: 0.24s; }
+.stagger-children > *:nth-child(13) { animation-delay: 0.26s; }
+.stagger-children > *:nth-child(14) { animation-delay: 0.28s; }
+.stagger-children > *:nth-child(15) { animation-delay: 0.30s; }
+.stagger-children > *:nth-child(16) { animation-delay: 0.32s; }
+.stagger-children > *:nth-child(17) { animation-delay: 0.34s; }
+.stagger-children > *:nth-child(18) { animation-delay: 0.36s; }
+.stagger-children > *:nth-child(19) { animation-delay: 0.38s; }
+.stagger-children > *:nth-child(20) { animation-delay: 0.40s; }
+
+/* ===================== */
+/* 💀 SKELETON LOADING    */
+/* ===================== */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.skel {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--r-sm);
+  color: transparent !important;
+  user-select: none;
+  pointer-events: none;
+}
+.skel-text {
+  display: inline-block; height: 14px; width: 80%;
+  vertical-align: middle;
+}
+.skel-block {
+  display: block; height: 180px; width: 100%;
+  border-radius: var(--r-lg);
+}
+.skel-card {
+  height: 160px; border-radius: var(--r-xl);
+}
+.skel-avatar {
+  width: 50px; height: 50px; border-radius: 50%;
+  display: inline-block;
+}
+.skel-badge {
+  display: inline-block; height: 20px; width: 60px;
+  border-radius: 10px;
+}
+.skel-row {
+  height: 44px; width: 100%;
+  border-radius: var(--r-sm);
+  margin-bottom: 6px;
+}
+
+/* ===================== */
+/* 🌀 CONTENT SWAP        */
+/* ===================== */
+.content-enter {
+  animation: fadeSlideUp 0.35s var(--ease-out);
+}
+.content-exit {
+  animation: fadeIn 0.15s var(--ease-out) reverse;
+}
+
+/* ===================== */
+/* ✨ MICRO-INTERACTIONS  */
+/* ===================== */
+.hover-lift {
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(255,214,10,0.08);
+}
+.click-press:active {
+  transform: scale(0.96);
+}
+
+/* ===================== */
+/* 🌊 PAGE TRANSITION     */
+/* ===================== */
+.page-enter {
+  animation: pageEnter 0.4s var(--ease-out);
+}
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===================== */
+/* 🚀 STATUS PULSE        */
+/* ===================== */
+.badge-pulse {
+  animation: badgePulse 2s ease-in-out infinite;
+}
+@keyframes badgePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ===================== */
+/* 🏃 ROW ENTRANCE (table)*/
+/* ===================== */
+.tr-enter {
+  animation: fadeSlideUp 0.3s var(--ease-out) both;
+}
+.tr-enter:nth-child(1)  { animation-delay: 0.02s; }
+.tr-enter:nth-child(2)  { animation-delay: 0.05s; }
+.tr-enter:nth-child(3)  { animation-delay: 0.08s; }
+.tr-enter:nth-child(4)  { animation-delay: 0.11s; }
+.tr-enter:nth-child(5)  { animation-delay: 0.14s; }
+.tr-enter:nth-child(6)  { animation-delay: 0.17s; }
+.tr-enter:nth-child(7)  { animation-delay: 0.20s; }
+.tr-enter:nth-child(8)  { animation-delay: 0.23s; }
+.tr-enter:nth-child(9)  { animation-delay: 0.26s; }
+.tr-enter:nth-child(10) { animation-delay: 0.29s; }
+.tr-enter:nth-child(11) { animation-delay: 0.32s; }
+.tr-enter:nth-child(12) { animation-delay: 0.35s; }

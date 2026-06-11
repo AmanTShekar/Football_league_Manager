@@ -188,7 +188,19 @@ export default function LeaguePage() {
   const qualifier = useMemo(() => matches.find(m => m.round === 2), [matches]);
   const finalMatch = useMemo(() => matches.find(m => m.round === 3), [matches]);
 
-  if (loading && !league) return <><Nav /><main><div className="loading-screen"><div className="loading-spinner" /><div className="loading-text">Loading...</div></div></main></>;
+  if (loading && !league) return (
+    <><Nav /><main className="page-enter">
+      <div className="lp-header">
+        <div className="btn-ghost btn-sm skel" style={{alignSelf:'flex-start',width:70}}>Back</div>
+        <div className="lp-title-area">
+          <div className="skel" style={{width:200,height:32,borderRadius:8}} />
+          <div className="lp-meta"><span className="skel skel-badge" /><span className="skel skel-badge" /></div>
+        </div>
+      </div>
+      <div className="lv-tabs"><div className="lv-tab skel" style={{flex:1,height:36}}>Table</div><div className="lv-tab skel" style={{flex:1,height:36}}>Players</div><div className="lv-tab skel" style={{flex:1,height:36}}>Matches</div></div>
+      <div className="standings-scroll"><div className="skel" style={{width:'100%',height:300,borderRadius:12}} /></div>
+    </main></>
+  );
 
   const isKo = league.type === 'knockout';
   const globalStatus = league.status || 'draft';
@@ -201,8 +213,8 @@ export default function LeaguePage() {
   return (
     <>
       <Nav />
-      <main>
-        <div className="lp-header">
+      <main className="page-enter">
+        <div className="lp-header animate-in" style={{animationDelay:'0.05s'}}>
           <Link href="/" className="btn-ghost btn-sm" style={{alignSelf:'flex-start',textDecoration:'none'}}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
             Back
@@ -226,7 +238,7 @@ export default function LeaguePage() {
         </div>
 
         {tab === 'standings' && (
-          <div className="standings-scroll">
+          <div className="standings-scroll animate-in" style={{animationDelay:'0.1s'}}>
             {isKo ? (
               <table className="standings-table">
                 <thead><tr><th className="stand-pos">#</th><th>Player</th><th className="stand-pts">Status</th></tr></thead>
@@ -236,7 +248,7 @@ export default function LeaguePage() {
                   ) : participants.map((p,i) => {
                     const isChamp = champPlayerId === p.id;
                     return (
-                      <tr key={p.id} className={isChamp ? 'champion-row' : ''}>
+                      <tr key={p.id} className={'tr-enter' + (isChamp ? ' champion-row' : '')}>
                         <td className="stand-pos">{i + 1}</td>
                         <td><div className="stand-team"><div className="stand-swatch" style={{background:playerColor(p.id)}} /><span className="stand-name">{p.name}</span></div></td>
                         <td className="stand-pts" style={{color:'var(--text-3)',fontSize:12}}>{isChamp ? 'CHAMPION' : 'Active'}</td>
@@ -253,7 +265,7 @@ export default function LeaguePage() {
                     {!standings?.standings?.length ? (
                       <tr><td colSpan="8" style={{textAlign:'center',color:'var(--text-3)',padding:24}}>No standings yet.</td></tr>
                     ) : standings.standings.map(row => (
-                      <tr key={row.player_id} className={champPlayerId === row.player_id ? 'champion-row' : ''}>
+                      <tr key={row.player_id} className={'tr-enter' + (champPlayerId === row.player_id ? ' champion-row' : '')}>
                         <td className="stand-pos">{row.position}</td>
                         <td><div className="stand-team"><div className="stand-swatch" style={{background:row.color}} /><span className="stand-name">{row.name}</span></div></td>
                         <td>{row.mp}</td><td>{row.w}</td><td>{row.d}</td><td>{row.l}</td>
@@ -287,7 +299,7 @@ export default function LeaguePage() {
         )}
 
         {tab === 'players' && (
-          <div className="section-card">
+          <div className="section-card animate-in" style={{animationDelay:'0.1s'}}>
             <div className="section-card-header">
               <div className="section-card-title">Players ({participants.length})</div>
             </div>
@@ -303,7 +315,7 @@ export default function LeaguePage() {
             {!participants.length ? (
               <p style={{textAlign:'center',color:'var(--text-3)',fontSize:13,padding:24}}>No players in this league.</p>
             ) : (
-              <div className="players-grid">
+              <div className="players-grid stagger-children">
                 {participants.map(p => (
                   <div key={p.link_id || p.id} className="p-card" style={{borderColor: playerColor(p.id) + '30'}}>
                     <div className="p-avatar" style={{background:`linear-gradient(135deg, ${playerColor(p.id)}44, ${playerColor(p.id)}22)`, borderColor: playerColor(p.id)}}>{p.name.charAt(0).toUpperCase()}</div>
@@ -348,7 +360,7 @@ export default function LeaguePage() {
             </div>
 
             {matchSec === 'pending' && (
-              <div>
+              <div className="stagger-children">
                 {!pendingMatches.length ? (
                   <p style={{fontSize:13,color:'var(--text-3)',padding:12,textAlign:'center'}}>No upcoming matches</p>
                 ) : pendingMatches.map(m => {
@@ -376,7 +388,7 @@ export default function LeaguePage() {
             )}
 
             {matchSec === 'completed' && (
-              <div>
+              <div className="stagger-children">
                 {!doneMatches.length ? (
                   <p style={{fontSize:13,color:'var(--text-3)',padding:12,textAlign:'center'}}>No completed matches</p>
                 ) : doneMatches.map(m => {

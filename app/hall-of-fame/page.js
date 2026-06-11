@@ -28,8 +28,8 @@ export default function HofPage() {
   return (
     <>
       <Nav />
-      <main>
-        <div className="section-card">
+      <main className="page-enter">
+        <div className="section-card animate-in" style={{animationDelay:'0.1s'}}>
           <div className="section-head">
             <h2>Hall of Fame</h2>
             <span className="section-count">{entries.length} champion{entries.length !== 1 ? 's' : ''}</span>
@@ -40,7 +40,7 @@ export default function HofPage() {
               <p>No champions yet. Score matches to crown winners.</p>
             </div>
           ) : (
-            <div className="hof-grid">
+            <div className="hof-grid stagger-children">
               {entries.map(h => (
                 <div key={h.player_id} className="hof-card" onClick={() => setProfileId(h.player_id)}>
                   <div className="hof-avatar">{h.player_name.charAt(0).toUpperCase()}</div>

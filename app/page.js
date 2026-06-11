@@ -7,15 +7,28 @@ import { ConfirmModal } from '@/components/Modal';
 
 const statusLabel = { draft:'Draft', ready:'Ready', started:'Started', ongoing:'Ongoing', completed:'Completed' };
 
+function SkeletonGrid() {
+  return (
+    <div className="league-list">
+      {[1,2,3].map(i => (
+        <div key={i} className="skel skel-card" style={{animationDelay: i * 0.08 + 's'}} />
+      ))}
+    </div>
+  );
+}
+
 export default function HomePage() {
   const [leagues, setLeagues] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [name, setName] = useState('');
   const [type, setType] = useState('round-robin');
   const [legs, setLegs] = useState(1);
   const [legsCustom, setLegsCustom] = useState('');
   const [confirm, setConfirm] = useState(null);
 
-  useEffect(() => { fetch('/api/leagues').then(r => r.json()).then(setLeagues); }, []);
+  useEffect(() => {
+    fetch('/api/leagues').then(r => r.json()).then(d => { setLeagues(d); setLoading(false); });
+  }, []);
 
   async function create() {
     if (!name.trim()) { showToast('Please enter a league name'); return; }
@@ -38,8 +51,8 @@ export default function HomePage() {
   return (
     <>
       <Nav />
-      <main>
-        <div className="hero-area">
+      <main className="page-enter">
+        <div className="hero-area animate-in" style={{animationDelay:'0.05s'}}>
           <div className="hero-glow" />
           <div className="hero-img-frame">
             <img src="/hero.jpg" alt="PPL" className="hero-img" onError={e => { e.target.style.display='none' }} />
@@ -49,7 +62,7 @@ export default function HomePage() {
           <div className="hero-divider" />
         </div>
 
-        <div className="create-card">
+        <div className="create-card animate-in" style={{animationDelay:'0.12s'}}>
           <div className="create-card-header">
             <div className="create-card-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -77,19 +90,21 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="section-card">
+        <div className="section-card animate-in" style={{animationDelay:'0.2s'}}>
           <div className="section-head">
             <h2>Your Leagues</h2>
-            <span className="section-count">{leagues.length} league{leagues.length !== 1 ? 's' : ''}</span>
+            <span className="section-count">{loading ? <span className="skel skel-badge" /> : leagues.length + ' league' + (leagues.length !== 1 ? 's' : '')}</span>
           </div>
 
-        {!leagues.length ? (
+        {loading ? (
+          <SkeletonGrid />
+        ) : !leagues.length ? (
           <div className="empty-state">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" style={{opacity:0.3,marginBottom:12}}><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             <p>No leagues yet. Create one above to get started.</p>
           </div>
         ) : (
-          <div className="league-list">
+          <div className="league-list stagger-children">
             {leagues.map(l => (
               <Link key={l.id} href={'/leagues/' + l.id} className="league-card" style={{textDecoration:'none'}}>
                 <div className="lc-top">

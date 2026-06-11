@@ -31,8 +31,8 @@ export default function PlayersPage() {
   return (
     <>
       <Nav />
-      <main>
-        <div className="section-card">
+      <main className="page-enter">
+        <div className="section-card animate-in" style={{animationDelay:'0.1s'}}>
           <div className="section-head">
             <h2>Players</h2>
             <span className="section-count">{players.length} player{players.length !== 1 ? 's' : ''}</span>
@@ -50,7 +50,7 @@ export default function PlayersPage() {
               <p>No players yet. Add global players above.</p>
             </div>
           ) : (
-            <div className="players-grid">
+            <div className="players-grid stagger-children">
               {players.map(p => (
                 <div key={p.id} className="p-card">
                   <div className="p-avatar">{p.name.charAt(0).toUpperCase()}</div>
