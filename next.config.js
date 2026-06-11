@@ -1,10 +1,7 @@
-const path = require('path');
-
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  turbopack: {
-    root: path.resolve(__dirname),
-  },
-};
+const nextConfig = {};
 
 module.exports = nextConfig;
+
+const { initOpenNextCloudflareForDev } = require('@opennextjs/cloudflare');
+initOpenNextCloudflareForDev();
