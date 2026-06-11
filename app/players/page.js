@@ -32,12 +32,12 @@ export default function PlayersPage() {
     <>
       <Nav />
       <main className="page-enter">
-        <div className="section-card animate-in" style={{animationDelay:'0.1s'}}>
+        <div className="section-card animate-in delay-1">
           <div className="section-head">
             <h2>Players</h2>
             <span className="section-count">{players.length} player{players.length !== 1 ? 's' : ''}</span>
           </div>
-          <div className="inline-form-row" style={{marginBottom:16}}>
+          <div className="inline-form-row mb-2">
             <input type="text" placeholder="Player name" value={name} onChange={e => setName(e.target.value)} onKeyDown={e => e.key === 'Enter' && add()} />
             <button className="btn-primary" onClick={add}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -46,7 +46,7 @@ export default function PlayersPage() {
           </div>
           {!players.length ? (
             <div className="empty-state">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" style={{opacity:0.3,marginBottom:12}}><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+              <svg className="empty-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
               <p>No players yet. Add global players above.</p>
             </div>
           ) : (

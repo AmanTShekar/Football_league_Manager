@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
+import Select from '@/components/Select';
 import { showToast } from '@/components/Toast';
 import { Modal } from '@/components/Modal';
 import ScoreModal from '@/components/ScoreModal';
@@ -214,8 +215,8 @@ export default function LeaguePage() {
     <>
       <Nav />
       <main className="page-enter">
-        <div className="lp-header animate-in" style={{animationDelay:'0.05s'}}>
-          <Link href="/" className="btn-ghost btn-sm" style={{alignSelf:'flex-start',textDecoration:'none'}}>
+        <div className="lp-header animate-in delay-1">
+          <Link href="/" className="btn-ghost btn-sm no-deco" style={{alignSelf:'flex-start'}}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
             Back
           </Link>
@@ -238,20 +239,20 @@ export default function LeaguePage() {
         </div>
 
         {tab === 'standings' && (
-          <div className="standings-scroll animate-in" style={{animationDelay:'0.1s'}}>
+          <div className="standings-scroll animate-in delay-1">
             {isKo ? (
               <table className="standings-table">
                 <thead><tr><th className="stand-pos">#</th><th>Player</th><th className="stand-pts">Status</th></tr></thead>
                 <tbody>
                   {!participants.length ? (
-                    <tr><td colSpan="3" style={{textAlign:'center',color:'var(--text-3)',padding:24}}>No players yet</td></tr>
+                    <tr><td colSpan="3" className="text-center text-3" style={{padding:24}}>No players yet</td></tr>
                   ) : participants.map((p,i) => {
                     const isChamp = champPlayerId === p.id;
                     return (
                       <tr key={p.id} className={'tr-enter' + (isChamp ? ' champion-row' : '')}>
                         <td className="stand-pos">{i + 1}</td>
                         <td><div className="stand-team"><div className="stand-swatch" style={{background:playerColor(p.id)}} /><span className="stand-name">{p.name}</span></div></td>
-                        <td className="stand-pts" style={{color:'var(--text-3)',fontSize:12}}>{isChamp ? 'CHAMPION' : 'Active'}</td>
+                        <td className="stand-pts text-3">{isChamp ? 'CHAMPION' : 'Active'}</td>
                       </tr>
                     );
                   })}
@@ -263,7 +264,7 @@ export default function LeaguePage() {
                   <thead><tr><th className="stand-pos">#</th><th>Player</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th className="stand-pts">Pts</th></tr></thead>
                   <tbody>
                     {!standings?.standings?.length ? (
-                      <tr><td colSpan="8" style={{textAlign:'center',color:'var(--text-3)',padding:24}}>No standings yet.</td></tr>
+                      <tr><td colSpan="8" className="text-center text-3" style={{padding:24}}>No standings yet.</td></tr>
                     ) : standings.standings.map(row => (
                       <tr key={row.player_id} className={'tr-enter' + (champPlayerId === row.player_id ? ' champion-row' : '')}>
                         <td className="stand-pos">{row.position}</td>
@@ -299,7 +300,7 @@ export default function LeaguePage() {
         )}
 
         {tab === 'players' && (
-          <div className="section-card animate-in" style={{animationDelay:'0.1s'}}>
+          <div className="section-card animate-in delay-1">
             <div className="section-card-header">
               <div className="section-card-title">Players ({participants.length})</div>
             </div>
@@ -310,10 +311,10 @@ export default function LeaguePage() {
               </button>
             </div>
             <div className="inline-form-row">
-              <input type="text" placeholder="Create new player..." className="create-input" style={{flex:1,minWidth:120}} value={newPlayerName} onChange={e => setNewPlayerName(e.target.value)} onKeyDown={e => e.key === 'Enter' && addNewParticipant()} />
+              <input type="text" placeholder="Create new player..." className="create-input flex-1 min-w-120" value={newPlayerName} onChange={e => setNewPlayerName(e.target.value)} onKeyDown={e => e.key === 'Enter' && addNewParticipant()} />
             </div>
             {!participants.length ? (
-              <p style={{textAlign:'center',color:'var(--text-3)',fontSize:13,padding:24}}>No players in this league.</p>
+              <p className="empty-text" style={{padding:24}}>No players in this league.</p>
             ) : (
               <div className="players-grid stagger-children">
                 {participants.map(p => (
@@ -362,7 +363,7 @@ export default function LeaguePage() {
             {matchSec === 'pending' && (
               <div className="stagger-children">
                 {!pendingMatches.length ? (
-                  <p style={{fontSize:13,color:'var(--text-3)',padding:12,textAlign:'center'}}>No upcoming matches</p>
+                  <p className="text-center text-3 text-sm" style={{padding:12}}>No upcoming matches</p>
                 ) : pendingMatches.map(m => {
                   const isSemi = m.round === 2 && !isKo;
                   const isFinal = m.round === 3 && !isKo;
@@ -390,7 +391,7 @@ export default function LeaguePage() {
             {matchSec === 'completed' && (
               <div className="stagger-children">
                 {!doneMatches.length ? (
-                  <p style={{fontSize:13,color:'var(--text-3)',padding:12,textAlign:'center'}}>No completed matches</p>
+                  <p className="text-center text-3 text-sm" style={{padding:12}}>No completed matches</p>
                 ) : doneMatches.map(m => {
                   const isDraw = m.home_goals === m.away_goals && !m.penalty_winner_id;
                   return (
@@ -415,13 +416,13 @@ export default function LeaguePage() {
       <Modal open={showAddMatch} onClose={() => setShowAddMatch(false)}>
         <div className="modal-title">Add Match</div>
         <div className="modal-teams">Select players for the match</div>
-        <div className="modal-inputs" style={{gap:12}}>
-          <select className="create-select" value={addMatchSel.home} onChange={e => setAddMatchSel(s => ({...s,home:e.target.value}))} style={{flex:1}}>
+        <div className="modal-inputs">
+          <select className="create-select flex-1" value={addMatchSel.home} onChange={e => setAddMatchSel(s => ({...s,home:e.target.value}))}>
             <option value="">Home player</option>
             {participants.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
           </select>
           <span className="vs-dash">—</span>
-          <select className="create-select" value={addMatchSel.away} onChange={e => setAddMatchSel(s => ({...s,away:e.target.value}))} style={{flex:1}}>
+          <select className="create-select flex-1" value={addMatchSel.away} onChange={e => setAddMatchSel(s => ({...s,away:e.target.value}))}>
             <option value="">Away player</option>
             {participants.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
           </select>
@@ -456,10 +457,7 @@ function AddPlayerDropdown({ leagueId, participants, onAdd }) {
 
   return (
     <>
-      <select className="create-select" style={{flex:1,minWidth:140}} value={sel} onChange={e => setSel(e.target.value)}>
-        <option value="">Add existing player...</option>
-        {available.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
-      </select>
+      <Select value={sel} onChange={v => setSel(v)} options={[{value:'',label:'Add existing player...'}, ...available.map(p => ({value:''+p.id, label:p.name}))]} placeholder="Add existing player..." className="flex-1 min-w-140" />
       <button className="btn-primary btn-sm" onClick={() => { if (sel) { onAdd(+sel); setSel(''); } }}>Add</button>
     </>
   );

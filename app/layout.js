@@ -5,6 +5,12 @@ export const metadata = {
   description: 'Football league management, reimagined.',
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+};
+
 function Footer() {
   return (
     <footer className="site-footer">

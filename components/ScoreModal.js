@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { Modal } from './Modal';
+import Select from './Select';
 import { showToast } from './Toast';
 
 export default function ScoreModal({ open, onClose, match, onSaved }) {
@@ -50,16 +51,16 @@ export default function ScoreModal({ open, onClose, match, onSaved }) {
         <input type="number" min="0" value={ag} onChange={e => setAg(e.target.value)} maxLength={2} />
       </div>
       {isTied && (
-        <div style={{marginBottom:16,textAlign:'center'}}>
-          <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8,marginBottom:10}}>
+        <div className="mb-2 text-center">
+          <div className="flex-center gap-2" style={{marginBottom:10}}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#aac4ff" strokeWidth="2" strokeLinecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            <span style={{color:'#aac4ff',fontSize:13,fontWeight:600}}>Match is a draw</span>
+            <span className="text-sm" style={{color:'#aac4ff',fontWeight:600}}>Match is a draw</span>
           </div>
-          <select className="create-select" value={pw} onChange={e => setPw(e.target.value)} style={{width:'100%',textAlign:'center'}}>
-            <option value="">— No penalty — regular draw</option>
-            {match?.home_player_id && <option value={match.home_player_id}>{match.home_player} (wins on pens)</option>}
-            {match?.away_player_id && <option value={match.away_player_id}>{match.away_player} (wins on pens)</option>}
-          </select>
+          <Select value={pw} onChange={v => setPw(v)} options={[
+            {value:'', label:'— No penalty — regular draw'},
+            ...(match?.home_player_id ? [{value:''+match.home_player_id, label:match.home_player + ' (wins on pens)'}] : []),
+            ...(match?.away_player_id ? [{value:''+match.away_player_id, label:match.away_player + ' (wins on pens)'}] : [])
+          ]} placeholder="Penalty winner" className="w-full" />
         </div>
       )}
       <div className="modal-actions">

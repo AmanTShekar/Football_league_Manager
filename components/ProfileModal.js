@@ -20,7 +20,7 @@ export default function ProfileModal({ open, onClose, playerId }) {
 
   return (
     <Modal open={open} onClose={onClose} size="lg">
-      <div className="profile-modal" style={{textAlign:'left'}}>
+      <div className="profile-modal text-left">
         <div className="profile-header">
           <div className="profile-avatar-lg">{profile?.name?.charAt(0) || '?'}</div>
           <div className="profile-info">
@@ -32,7 +32,7 @@ export default function ProfileModal({ open, onClose, playerId }) {
         <div className="profile-section-title">Match History</div>
         <div className="profile-match-list">
           {!wins.length ? (
-            <p style={{color:'var(--text-3)',fontSize:13,padding:16,textAlign:'center'}}>No match history yet.</p>
+            <p className="empty-text" style={{padding:16}}>No match history yet.</p>
           ) : wins.map(w => (
             <div key={w.id} className="profile-match-item">
               <div className="profile-match-teams">{w.home_team} {w.home_goals} &mdash; {w.away_goals} {w.away_team}</div>
@@ -40,7 +40,7 @@ export default function ProfileModal({ open, onClose, playerId }) {
             </div>
           ))}
         </div>
-        <div className="modal-actions" style={{marginTop:24}}>
+        <div className="modal-actions mt-3">
           <button className="btn-ghost btn-sm btn-block" onClick={onClose}>Close</button>
         </div>
       </div>
